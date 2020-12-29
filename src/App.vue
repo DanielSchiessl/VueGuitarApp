@@ -1,7 +1,7 @@
 <template>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld Welcome to Your Vue.js App"/> -->
-    <h1> Daniels first VueJS App ;) </h1>
+    <h1> Daniels first VueJS App ;) Edit for CI to start ... </h1>
     <fretboard></fretboard>
 </template>
 
