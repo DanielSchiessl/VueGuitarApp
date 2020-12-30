@@ -62,7 +62,7 @@ export default {
 <style scoped>
 
 .wrapper {
-    display: grid;
+    display: inline-grid;
     grid-gap: 0px;
     background-color: #fff;
     color: #444;
