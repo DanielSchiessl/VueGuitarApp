@@ -2,7 +2,7 @@
     <div id="scalemodeselection">
         <p>Select the scale mode that is to be used:</p>
         <div class="wrapper">
-            <button v-for="(mode, modeindex) in modenames" class="modebutton" :key="modeindex" :style="{'grid-row': 1,'grid-column': modeindex+1}">
+            <button v-for="(mode, modeindex) in modenames" class="modebutton" :key="modeindex" :style="{'grid-row': 1,'grid-column': modeindex+1}" :id="mode" v-on:click="select($event)">
                 {{mode}}
             </button>
         </div>
@@ -12,6 +12,12 @@
 <script>
 export default {
     name: 'scalemodeselector',
+    methods: {
+        select: function (event) {
+            var targetId = event.currentTarget.id
+            console.log(targetId) // the ID is equal to the notename to be used
+        }
+    },
     data () {
         return {
             modenames: ['ionian (major)', 'dorian', 'phrygian', 'lydian', 'mixlydian', 'aeolian (minor)', 'locrian']

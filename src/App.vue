@@ -1,25 +1,33 @@
 <template>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld Welcome to Your Vue.js App"/> -->
-    <h1> Daniels first VueJS App ;) </h1>
-    <noteselector></noteselector>
+    <h1> VueJs Guitar App </h1>
+     <!--  <noteselector></noteselector> -->
+    <noteselectorv2></noteselectorv2>
     <scalemodeselector></scalemodeselector>
     <fretboard></fretboard>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import noteselector from './components/noteselector.vue'
+// import noteselector from './components/noteselector.vue'
+import noteselectorv2 from './components/noteselectorv2.vue'
 import scalemodeselector from './components/scalemodeselector.vue'
 import fretboard from './components/fretboard.vue'
 // import fretnote from './components/fretnote.vue'
 
 export default {
     name: 'App',
+    // data () {
+    //    return {
+    //        note_selected: 'C'
+    //    }
+    // },
     components: {
         // HelloWorld,
         // fretnote,
-        noteselector,
+        // noteselector,
+        noteselectorv2,
         scalemodeselector,
         fretboard
     }
