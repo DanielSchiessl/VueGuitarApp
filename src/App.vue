@@ -6,6 +6,26 @@
     <noteselectorv2></noteselectorv2>
     <scalemodeselector></scalemodeselector>
     <fretboard></fretboard>
+
+    <br>
+    <br>
+    <hr>
+
+    <div>
+        <p style="text-align: left">Feature ideas for next versions:</p>
+        <ul style="text-align: left">
+            <li style="text-align: left">Metronome Support</li>
+            <li style="text-align: left">Random (Picking and Scale) Exercise Generator</li>
+            <li style="text-align: left">Chord Selection and Overlay</li>
+            <li style="text-align: left">Playback Feature with Chord Preview</li>
+            <li style="text-align: left">Practice Progress and Usage Charts</li>
+            <li style="text-align: left">Fixed Orientation and Size (especially for mobile devices)</li>
+            <li style="text-align: left">Enrich PWA and use TWA?</li>
+            <li style="text-align: left">Grid Support Detection (e.g. via Browser Version)</li>
+            <li style="text-align: left">...</li>
+        </ul>
+    </div>
+
 </template>
 
 <script>
