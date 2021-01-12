@@ -14,14 +14,18 @@
     <div>
         <p style="text-align: left">Feature ideas for next versions:</p>
         <ul style="text-align: left">
-            <li style="text-align: left">Metronome Support</li>
-            <li style="text-align: left">Random (Picking and Scale) Exercise Generator</li>
-            <li style="text-align: left">Chord Selection and Overlay</li>
-            <li style="text-align: left">Playback Feature with Chord Preview</li>
-            <li style="text-align: left">Practice Progress and Usage Charts</li>
-            <li style="text-align: left">Fixed Orientation and Size (especially for mobile devices)</li>
+            <li style="text-align: left">Change view between note-name and note-function / scale-degree</li>
+            <li style="text-align: left">Change string notes or complete tuning</li>
+            <li style="text-align: left">Move all settings into modal(s)</li>
+            <li style="text-align: left">Add (pentatonic) box selectors (just like 3NPS)</li>
+            <li style="text-align: left">Metronome support</li>
+            <li style="text-align: left">Random (Picking/Rhythom and Scale) exercise generator</li>
+            <li style="text-align: left">Chord Selection (matching the selected scale) and overlay</li>
+            <li style="text-align: left">Playback feature with chord preview</li>
+            <li style="text-align: left">Practice progress and usage charts</li>
+            <li style="text-align: left">Fixed orientation and size (especially for mobile devices)</li>
             <li style="text-align: left">Enrich PWA and use TWA?</li>
-            <li style="text-align: left">Grid Support Detection (e.g. via Browser Version)</li>
+            <li style="text-align: left">Grid support detection (e.g. via Browser Version)</li>
             <li style="text-align: left">...</li>
         </ul>
     </div>
