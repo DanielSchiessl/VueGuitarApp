@@ -3,8 +3,14 @@
     <!-- <HelloWorld Welcome to Your Vue.js App"/> -->
     <h1> VueJs Guitar App </h1>
      <!--  <noteselector></noteselector> -->
-    <noteselectorv2></noteselectorv2>
-    <scalemodeselector></scalemodeselector>
+
+    <button id="show-modal" @click="showModal = true">Select Scale</button>
+    <!-- use the modal component, pass in the prop -->
+    <scaleselectormodal v-if="showModal" @close="showModal = false">
+    </scaleselectormodal>
+
+    <!-- <noteselectorv2></noteselectorv2> is now inside the modal component -->
+    <!-- <scalemodeselector></scalemodeselector> is now inside the modal component -->
     <fretboard></fretboard>
 
     <br>
@@ -35,25 +41,28 @@
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 // import noteselector from './components/noteselector.vue'
-import noteselectorv2 from './components/noteselectorv2.vue'
-import scalemodeselector from './components/scalemodeselector.vue'
+// import noteselectorv2 from './components/noteselectorv2.vue' --> is now inside the modal component
+// import scalemodeselector from './components/scalemodeselector.vue' --> is now inside the modal component
 import fretboard from './components/fretboard.vue'
+import scaleselectormodal from './components/scaleselectormodal.vue'
 // import fretnote from './components/fretnote.vue'
 
 export default {
     name: 'App',
-    // data () {
-    //    return {
-    //        note_selected: 'C'
-    //    }
-    // },
+    data () {
+        return {
+            showModal: false
+            // note_selected: 'C'
+        }
+    },
     components: {
         // HelloWorld,
         // fretnote,
         // noteselector,
-        noteselectorv2,
-        scalemodeselector,
-        fretboard
+        // noteselectorv2, --> is now inside the modal component
+        // scalemodeselector, --> is now inside the modal component
+        fretboard,
+        scaleselectormodal
     }
 }
 </script>
@@ -67,9 +76,7 @@ export default {
     color: #2c3e50;
     margin-top: 60px;
 }
-
 body {
     margin: 40px;
 }
-
 </style>
