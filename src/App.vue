@@ -11,7 +11,10 @@
 
     <!-- <noteselectorv2></noteselectorv2> is now inside the modal component -->
     <!-- <scalemodeselector></scalemodeselector> is now inside the modal component -->
-    <fretboard></fretboard>
+    <fretboard
+        :showNoteFunction=showNoteFunction>
+    </fretboard>
+    <button id="show-noteFunction" @click="showNoteFunction = !showNoteFunction">Show Note Function</button>
 
     <br>
     <br>
@@ -51,7 +54,8 @@ export default {
     name: 'App',
     data () {
         return {
-            showModal: false
+            showModal: false,
+            showNoteFunction: false
             // note_selected: 'C'
         }
     },

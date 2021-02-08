@@ -1,11 +1,18 @@
 <template>
-    <div v-if="isScaleNoteInThreeNpsPattern || threenpsmodeactivated" class="note"> {{notename}} </div>
+    <div v-if="isScaleNoteInThreeNpsPattern || threenpsmodeactivated" class="note">
+        <div v-if="showNoteFunction">
+            {{noteFunction}}
+        </div>
+        <div v-else>
+            {{notename}}
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'fretnote',
-    props: ['threenpsmodeactivated', 'threenpsstartdegree', 'stringno', 'notename', 'notescaledegree', 'notenbrabs', 'fretno', 'selectednpspattern'],
+    props: ['showNoteFunction', 'threenpsmodeactivated', 'threenpsstartdegree', 'stringno', 'notename', 'noteFunction', 'notescaledegree', 'notenbrabs', 'fretno', 'selectednpspattern'],
     computed: {
         threeNpsScaleDegreesOnThatString () {
             var targetScaleDegrees = [(this.threenpsstartdegree + this.stringno * 3) % 7, ((this.threenpsstartdegree + this.stringno * 3) - 1) % 7, ((this.threenpsstartdegree + this.stringno * 3) - 2) % 7]

@@ -1,11 +1,14 @@
 <template>
-    <div id="app">
+    <div>
         <p>Fretboard for a {{strings.NoteNames.length}}-string guitar with {{numberOfFrets}} frets</p>
         <div class="wrapper">
             <template v-for="(stringNoteNbrAbs, stringindex) in strings.NoteNbrsAbs" :key=stringindex> <!-- iterate over all (6) strings | use <template> as that is an empty container which will not be added to the DOM -->
-                <div v-for="fretNo in numberOfFrets" class="box" :key="fretNo" :style="{'grid-row': stringindex+1,'grid-column': fretNo}"> <!-- set the ID to be the respective noteNumber so we can update the same notes all at once -->
+                <!-- fretsize should scale down linearly from 120 px to 40px -> reduce the 80 px delta in percent of fretNo -->
+                <div v-for="fretNo in numberOfFrets" class="box" :key="fretNo" :style="{'width':120-80*((fretNo/numberOfFrets))+'px', 'grid-row': stringindex+1,'grid-column': fretNo}"> <!-- set the ID to be the respective noteNumber so we can update the same notes all at once -->
                     <fretnote
                         v-if="scale.NoteNbrsAbs.includes((stringNoteNbrAbs+fretNo)%12)"
+                        :showNoteFunction=showNoteFunction
+                        :noteFunction="scale.NoteFunction[scale.NoteNbrsAbs.indexOf((stringNoteNbrAbs+fretNo)%12)]"
                         :notename="scale.NoteNames[scale.NoteNbrsAbs.indexOf((stringNoteNbrAbs+fretNo)%12)]"
                         :notescaledegree="1+scale.NoteNbrsAbs.indexOf((stringNoteNbrAbs+fretNo)%12)"
                         :notenbrabs=(stringNoteNbrAbs+fretNo)%12
@@ -36,9 +39,7 @@ export default {
     components: {
         fretnote
     },
-    props: {
-        msg: String
-    },
+    props: ['showNoteFunction'],
     data () {
         return {
             numberOfFrets: 24,
@@ -51,7 +52,8 @@ export default {
             // notes:[["C","B#","Dbb"],["C#","Db",],["D","Ebb"],["D#","Eb"],["E","Fb"],["F","E#","Gbb"],["F#","Gb"],["G","Abb"],["G#","Ab"],["A","Bbb"],["A#","Bb"],["B","Cb"]],
             scale: {
                 NoteNames: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
-                NoteNbrsAbs: [2, 4, 6, 7, 9, 11, 1]
+                NoteNbrsAbs: [2, 4, 6, 7, 9, 11, 1],
+                NoteFunction: ['R', '2', 'M3', '4', '5', '6', 'M7']
             },
             chordNotes: []
         }
@@ -73,7 +75,7 @@ export default {
     background-color: rgb(160, 110, 80);
     color: #fff;
     padding: 20px;
-    min-width: 50px;
+    min-width: 40px;
     font-size: 150%;
     justify-content: center;
     align-items: center;
