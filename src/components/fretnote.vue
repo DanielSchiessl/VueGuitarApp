@@ -1,18 +1,34 @@
 <template>
-    <div v-if="isScaleNoteInThreeNpsPattern || threenpsmodeactivated" class="note">
-        <div v-if="showNoteFunction">
-            {{noteFunction}}
+    <div v-if="isScaleNoteInThreeNpsPattern || threenpsmodeactivated" class="note" v-bind:style="{opacity: calcOpacity}">
+        <div v-if="isChordSelected">
+                <div v-if="showChordNoteFunction">
+                    {{getNoteNameInChord}}
+                </div>
+                <div v-else>
+                    {{getNoteFunctionInChord}}
+                </div>
         </div>
         <div v-else>
-            {{notename}}
+            <div v-if="showScaleNoteFunction">
+                {{noteFunction}}
+            </div>
+            <div v-else>
+                {{notename}}
+            </div>
         </div>
+
     </div>
 </template>
 
 <script>
 export default {
     name: 'fretnote',
-    props: ['showNoteFunction', 'threenpsmodeactivated', 'threenpsstartdegree', 'stringno', 'notename', 'noteFunction', 'notescaledegree', 'notenbrabs', 'fretno', 'selectednpspattern'],
+    props: ['isChordSelected', 'showChordNoteFunction', 'chord', 'showScaleNoteFunction', 'threenpsmodeactivated', 'threenpsstartdegree', 'stringno', 'notename', 'noteFunction', 'notescaledegree', 'noteNbrAbs', 'fretno', 'selectednpspattern'],
+    data () {
+        return {
+            opacity: 1
+        }
+    },
     computed: {
         threeNpsScaleDegreesOnThatString () {
             var targetScaleDegrees = [(this.threenpsstartdegree + this.stringno * 3) % 7, ((this.threenpsstartdegree + this.stringno * 3) - 1) % 7, ((this.threenpsstartdegree + this.stringno * 3) - 2) % 7]
@@ -21,6 +37,23 @@ export default {
         },
         isScaleNoteInThreeNpsPattern () {
             if (this.threeNpsScaleDegreesOnThatString.includes(this.notescaledegree)) { return true } else { return false }
+        },
+        calcOpacity () {
+            if (this.isChordSelected) {
+                if (this.chord.noteNbrsAbs.includes(this.noteNbrAbs)) {
+                    return 1
+                } else {
+                    return 0.2
+                }
+            } else { // if no chord is selected show all scale notes
+                return 1
+            }
+        },
+        getNoteNameInChord () {
+            return this.chord.noteNames[this.chord.noteNbrsAbs.indexOf(this.noteNbrAbs)]
+        },
+        getNoteFunctionInChord () {
+            return this.chord.noteFunction[this.chord.noteNbrsAbs.indexOf(this.noteNbrAbs)]
         }
     }
 }

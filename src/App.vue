@@ -12,12 +12,20 @@
     <!-- <noteselectorv2></noteselectorv2> is now inside the modal component -->
     <!-- <scalemodeselector></scalemodeselector> is now inside the modal component -->
     <fretboard
-        :showNoteFunction=showNoteFunction>
+        :showScaleNoteFunction=showScaleNoteFunction
+        :isChordSelected=isChordSelected
+        :showChordNoteFunction=showChordNoteFunction>
     </fretboard>
-    <button id="show-noteFunction" @click="showNoteFunction = !showNoteFunction">Show Note Function</button>
-
     <br>
+    <button style="float: left" id="showScaleNoteFunction" @click="showScaleNoteFunction = !showScaleNoteFunction">Show Scale Note Function</button>
     <br>
+    <hr>
+    <p style="float: left"> Proposed Chords:</p>
+    <br> <br> <br>
+    <button style="float: left; font-weight: bold; font-size: 40px" id="selectChord" @click="isChordSelected = !isChordSelected">Em</button>
+    <br> <br> <br>
+        <button style="float: left" id="showChordNoteFunction" @click="showChordNoteFunction = !showChordNoteFunction">Show Chord Note Function</button>
+    <br> <br> <br>
     <hr>
 
     <div>
@@ -55,7 +63,9 @@ export default {
     data () {
         return {
             showModal: false,
-            showNoteFunction: false
+            showScaleNoteFunction: false,
+            isChordSelected: true,
+            showChordNoteFunction: false
             // note_selected: 'C'
         }
     },
