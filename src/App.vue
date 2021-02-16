@@ -3,6 +3,12 @@
     <!-- <HelloWorld Welcome to Your Vue.js App"/> -->
     <h1> VueJs Guitar App </h1>
      <!--  <noteselector></noteselector> -->
+    <hr>
+    <p style="font-weight: bold;">Screen Information</p>
+    <p>{{screenResolution}}</p>
+    <p>{{pixelRatio}}</p>
+    <p>{{resultingScreenResolution}}</p>
+    <hr>
 
     <button id="show-modal" @click="showModal = true">Select Scale</button>
     <!-- use the modal component, pass in the prop -->
@@ -12,8 +18,10 @@
     <!-- <noteselectorv2></noteselectorv2> is now inside the modal component -->
     <!-- <scalemodeselector></scalemodeselector> is now inside the modal component -->
     <fretboard
+        :scale=scale
         :showScaleNoteFunction=showScaleNoteFunction
         :isChordSelected=isChordSelected
+        :chord=chordSelected
         :showChordNoteFunction=showChordNoteFunction>
     </fretboard>
     <br>
@@ -22,7 +30,12 @@
     <hr>
     <p style="float: left"> Proposed Chords:</p>
     <br> <br> <br>
-    <button style="float: left; font-weight: bold; font-size: 40px" id="selectChord" @click="isChordSelected = !isChordSelected">Em</button>
+
+    <button v-for="chord in chords" :key=chord style="float: left; font-weight: bold; font-size: 40px"
+        @click="toggleChords(chord)">
+        {{chord.name}}
+    </button>
+
     <br> <br> <br>
         <button style="float: left" id="showChordNoteFunction" @click="showChordNoteFunction = !showChordNoteFunction">Show Chord Note Function</button>
     <br> <br> <br>
@@ -62,10 +75,38 @@ export default {
     name: 'App',
     data () {
         return {
+            screenResolution: 'Screen Resolution: ' + screen.width + 'x' + screen.height,
+            pixelRatio: 'PixelRatio: ' + window.devicePixelRatio,
+            resultingScreenResolution: 'Resulting Screen Resolution: ' + window.screen.width * window.devicePixelRatio + 'x' + window.screen.height * window.devicePixelRatio,
             showModal: false,
             showScaleNoteFunction: false,
             isChordSelected: true,
-            showChordNoteFunction: false
+            showChordNoteFunction: false,
+            chordSelected: {
+                name: 'D', // D as the default chord
+                noteNames: ['D', 'F#', 'A'],
+                noteNbrsAbs: [2, 6, 9],
+                noteFunction: ['R', '3', '5']
+            },
+            scale: { // D major as the default scale
+                noteNames: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
+                noteNbrsAbs: [2, 4, 6, 7, 9, 11, 1],
+                noteFunction: ['R', '2', 'M3', '4', '5', '6', 'M7']
+            },
+            chords: [
+                {
+                    name: 'D',
+                    noteNames: ['D', 'F#', 'A'],
+                    noteNbrsAbs: [2, 6, 9],
+                    noteFunction: ['R', '3', '5']
+                },
+                {
+                    name: 'Em',
+                    noteNames: ['E', 'G', 'B'],
+                    noteNbrsAbs: [4, 7, 11],
+                    noteFunction: ['R', 'b3', '5']
+                }
+            ]
             // note_selected: 'C'
         }
     },
@@ -77,6 +118,18 @@ export default {
         // scalemodeselector, --> is now inside the modal component
         fretboard,
         scaleselectormodal
+    },
+    methods: {
+        toggleChords: function (chord) {
+            if (this.chordSelected === chord) {
+                console.log('same chord')
+                this.isChordSelected = !(this.isChordSelected)
+            } else {
+                console.log('another chord')
+                this.chordSelected = chord
+                this.isChordSelected = true
+            }
+        }
     }
 }
 </script>

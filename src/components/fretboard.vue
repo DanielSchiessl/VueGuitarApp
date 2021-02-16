@@ -42,7 +42,7 @@ export default {
     components: {
         fretnote
     },
-    props: ['showChordNoteFunction', 'showScaleNoteFunction', 'isChordSelected'],
+    props: ['chord', 'showChordNoteFunction', 'isChordSelected', 'scale', 'showScaleNoteFunction'],
     data () {
         return {
             numberOfFrets: 24,
@@ -51,17 +51,6 @@ export default {
             strings: {
                 noteNames: ['E', 'B', 'G', 'D', 'A', 'E'], // tuning of the guitar / instrument (reverse for top to bottom view) - actually not needed ... maybe later if we want to show the 0-fret / open-string name ...
                 noteNbrsAbs: [4, 11, 7, 2, 9, 4] // tuning of the guitar / instrument (reverse for top to bottom view)
-            },
-            // notes:[["C","B#","Dbb"],["C#","Db",],["D","Ebb"],["D#","Eb"],["E","Fb"],["F","E#","Gbb"],["F#","Gb"],["G","Abb"],["G#","Ab"],["A","Bbb"],["A#","Bb"],["B","Cb"]],
-            scale: {
-                noteNames: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
-                noteNbrsAbs: [2, 4, 6, 7, 9, 11, 1],
-                noteFunction: ['R', '2', 'M3', '4', '5', '6', 'M7']
-            },
-            chord: { // Em chord just for testing
-                noteNames: ['E', 'G', 'B'],
-                noteNbrsAbs: [4, 7, 11],
-                noteFunction: ['R', '3', '5']
             }
         }
     }
