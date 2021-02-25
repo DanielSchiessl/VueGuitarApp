@@ -67,8 +67,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height:40px;
-    width:40px;
+    height:50px;
+    width:50px;
     z-index: 20;  /* to be below the parent element */
 }
 </style>

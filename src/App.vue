@@ -4,10 +4,16 @@
     <h1> VueJs Guitar App </h1>
      <!--  <noteselector></noteselector> -->
     <hr>
+
+    <button v-on:click="updateScreenInformation()">
+        getScreenInfo
+    </button>
+
     <p style="font-weight: bold;">Screen Information</p>
     <p>{{screenResolution}}</p>
     <p>{{pixelRatio}}</p>
     <p>{{resultingScreenResolution}}</p>
+    <p>{{screenOrientation}}</p>
     <hr>
 
     <button id="show-modal" @click="showModal = true">Select Scale</button>
@@ -76,8 +82,9 @@ export default {
     data () {
         return {
             screenResolution: 'Screen Resolution: ' + screen.width + 'x' + screen.height,
-            pixelRatio: 'PixelRatio: ' + window.devicePixelRatio,
-            resultingScreenResolution: 'Resulting Screen Resolution: ' + window.screen.width * window.devicePixelRatio + 'x' + window.screen.height * window.devicePixelRatio,
+            pixelRatio: 'PixelRatio / Zoom-Factor: ' + window.devicePixelRatio,
+            resultingScreenResolution: 'Resulting Screen Resolution: ' + (window.screen.width * window.devicePixelRatio).toFixed(0) + 'x' + (window.screen.height * window.devicePixelRatio).toFixed(0),
+            screenOrientation: 'Screen orientation mode: ' + screen.orientation.type + ' | Screen angle: ' + screen.orientation.angle,
             showModal: false,
             showScaleNoteFunction: false,
             isChordSelected: true,
@@ -129,6 +136,13 @@ export default {
                 this.chordSelected = chord
                 this.isChordSelected = true
             }
+        },
+        updateScreenInformation: function () {
+            console.log('Screen Resolution: ' + screen.width + 'x' + screen.height)
+            this.screenResolution = 'Screen Resolution: ' + screen.width + 'x' + screen.height
+            this.pixelRatio = 'PixelRatio / Zoom-Factor: ' + window.devicePixelRatio.toFixed(2)
+            this.resultingScreenResolution = 'Resulting Screen Resolution: ' + (window.screen.width * window.devicePixelRatio).toFixed(0) + 'x' + (window.screen.height * window.devicePixelRatio).toFixed(0)
+            this.screenOrientation = 'Screen orientation mode: ' + screen.orientation.type + ' | Screen angle: ' + screen.orientation.angle
         }
     }
 }

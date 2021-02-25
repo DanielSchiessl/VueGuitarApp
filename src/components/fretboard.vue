@@ -22,7 +22,7 @@
                     </fretnote>
                 </div>
             </template>
-            <div v-for="fretNo in numberOfFrets"
+            <div v-for="fretNo in numberOfFrets" style="font-weight: bold"
                 :key=fretNo
                 v-show="scale.noteNbrsAbs.includes((strings.noteNbrsAbs[strings.noteNbrsAbs.length-1]+fretNo)%12)"
                 v-on:click="threenpsmodeactivated = !threenpsmodeactivated;
@@ -70,7 +70,7 @@ export default {
 .box {
     background-color: rgb(160, 110, 80);
     color: #fff;
-    padding: 20px;
+    padding: 10px;
     min-width: 40px;
     font-size: 150%;
     justify-content: center;
