@@ -77,6 +77,8 @@ import fretboard from './components/fretboard.vue'
 import scaleselectormodal from './components/scaleselectormodal.vue'
 // import fretnote from './components/fretnote.vue'
 
+console.log('starting up ...')
+
 export default {
     name: 'App',
     data () {
@@ -138,11 +140,20 @@ export default {
             }
         },
         updateScreenInformation: function () {
-            console.log('Screen Resolution: ' + screen.width + 'x' + screen.height)
             this.screenResolution = 'Screen Resolution: ' + screen.width + 'x' + screen.height
             this.pixelRatio = 'PixelRatio / Zoom-Factor: ' + window.devicePixelRatio.toFixed(2)
             this.resultingScreenResolution = 'Resulting Screen Resolution: ' + (window.screen.width * window.devicePixelRatio).toFixed(0) + 'x' + (window.screen.height * window.devicePixelRatio).toFixed(0)
             this.screenOrientation = 'Screen orientation mode: ' + screen.orientation.type + ' | Screen angle: ' + screen.orientation.angle
+        },
+        changeScreenForMobile: function () {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen()
+                console.log('executing requestFullscreen() ...')
+            } else if (document.documentElement.webkitRequestFullScreen) {
+                document.documentElement.webkitRequestFullScreen()
+                console.log('executing webkitRequestFullScreen() ...')
+            }
+            screen.orientation.lock('landscape')
         }
     }
 }
