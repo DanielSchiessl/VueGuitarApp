@@ -9,6 +9,7 @@
         getScreenInfo
     </button>
 
+    <!-- Show some screen info for debugging ... -->
     <p style="font-weight: bold;">Screen Information</p>
     <p>{{screenResolution}}</p>
     <p>{{pixelRatio}}</p>
@@ -78,6 +79,17 @@ import scaleselectormodal from './components/scaleselectormodal.vue'
 // import fretnote from './components/fretnote.vue'
 
 console.log('starting up ...')
+console.log(screen.orientation)
+if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen()
+    console.log('executing requestFullscreen() ...')
+} else if (document.documentElement.webkitRequestFullScreen) {
+    document.documentElement.webkitRequestFullScreen()
+    console.log('executing webkitRequestFullScreen() ...')
+}
+if (screen.orientation.lock()) {
+    screen.orientation.lock('landscape')
+}
 
 export default {
     name: 'App',
@@ -86,7 +98,7 @@ export default {
             screenResolution: 'Screen Resolution: ' + screen.width + 'x' + screen.height,
             pixelRatio: 'PixelRatio / Zoom-Factor: ' + window.devicePixelRatio,
             resultingScreenResolution: 'Resulting Screen Resolution: ' + (window.screen.width * window.devicePixelRatio).toFixed(0) + 'x' + (window.screen.height * window.devicePixelRatio).toFixed(0),
-            screenOrientation: 'Screen orientation mode: ' + screen.orientation.type + ' | Screen angle: ' + screen.orientation.angle,
+            screenOrientation: 'Orientation: ' + screen.orientation.type + ' mode @ ' + screen.orientation.angle + '°',
             showModal: false,
             showScaleNoteFunction: false,
             isChordSelected: true,
@@ -143,17 +155,7 @@ export default {
             this.screenResolution = 'Screen Resolution: ' + screen.width + 'x' + screen.height
             this.pixelRatio = 'PixelRatio / Zoom-Factor: ' + window.devicePixelRatio.toFixed(2)
             this.resultingScreenResolution = 'Resulting Screen Resolution: ' + (window.screen.width * window.devicePixelRatio).toFixed(0) + 'x' + (window.screen.height * window.devicePixelRatio).toFixed(0)
-            this.screenOrientation = 'Screen orientation mode: ' + screen.orientation.type + ' | Screen angle: ' + screen.orientation.angle
-        },
-        changeScreenForMobile: function () {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen()
-                console.log('executing requestFullscreen() ...')
-            } else if (document.documentElement.webkitRequestFullScreen) {
-                document.documentElement.webkitRequestFullScreen()
-                console.log('executing webkitRequestFullScreen() ...')
-            }
-            screen.orientation.lock('landscape')
+            this.screenOrientation = 'Orientation: ' + screen.orientation.type + ' mode @ ' + screen.orientation.angle + '°'
         }
     }
 }
