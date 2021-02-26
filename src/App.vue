@@ -66,7 +66,6 @@
             <li style="text-align: left">...</li>
         </ul>
     </div>
-
 </template>
 
 <script>
@@ -79,12 +78,13 @@ import scaleselectormodal from './components/scaleselectormodal.vue'
 // import fretnote from './components/fretnote.vue'
 
 console.log('starting up ...')
+console.log(document.getElementById('app'))
 console.log(screen.orientation)
 if (document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen()
+    document.getElementById('app').requestFullscreen()
     console.log('executing requestFullscreen() ...')
 } else if (document.documentElement.webkitRequestFullScreen) {
-    document.documentElement.webkitRequestFullScreen()
+    document.getElementById('app').webkitRequestFullScreen()
     console.log('executing webkitRequestFullScreen() ...')
 }
 if (screen.orientation.lock()) {
@@ -156,6 +156,16 @@ export default {
             this.pixelRatio = 'PixelRatio / Zoom-Factor: ' + window.devicePixelRatio.toFixed(2)
             this.resultingScreenResolution = 'Resulting Screen Resolution: ' + (window.screen.width * window.devicePixelRatio).toFixed(0) + 'x' + (window.screen.height * window.devicePixelRatio).toFixed(0)
             this.screenOrientation = 'Orientation: ' + screen.orientation.type + ' mode @ ' + screen.orientation.angle + '°'
+            if (document.documentElement.requestFullscreen) {
+                document.getElementById('app').requestFullscreen()
+                console.log('executing requestFullscreen() ...')
+            } else if (document.documentElement.webkitRequestFullScreen) {
+                document.getElementById('app').webkitRequestFullScreen()
+                console.log('executing webkitRequestFullScreen() ...')
+            }
+            if (screen.orientation.lock()) {
+                screen.orientation.lock('landscape')
+            }
         }
     }
 }
@@ -169,6 +179,16 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+}
+#app:fullscreen {
+    background-color: rgb(255, 255, 255); /* the default fullscreen background color is black so we have to manually change it white with this rule */
+    overflow-y: auto;  /* this allows scrolling even though being locked and in fullscreen mode */
+    overflow-x: auto;
+}
+#app:-webkit-full-screen {
+    background-color: rgb(255, 255, 255);/* the default fullscreen background color is black so we have to manually change it white with this rule */
+    overflow-y: auto; /* this allows scrolling even though being locked and in fullscreen mode */
+    overflow-x: auto;
 }
 body {
     margin: 40px;
