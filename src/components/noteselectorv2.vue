@@ -59,10 +59,13 @@
 <script>
 export default {
     name: 'noteselectorv2',
+    emits: ['changeRootNote'], // just for documentation (?)
     methods: {
         select: function (event) {
-            var targetId = event.currentTarget.id
-            console.log(targetId) // the ID is equal to the notename to be used
+            var rootNote = event.currentTarget.id // the ID is equal to the notename to be used
+            // console.log('change at component level') // the ID is equal to the notename to be used
+            // console.log(rootNote) // the ID is equal to the notename to be used
+            this.$emit('changeRootNote', rootNote)
         }
     }
 }

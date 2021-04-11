@@ -5,9 +5,11 @@
      <!--  <noteselector></noteselector> -->
     <hr>
 
-    <button v-on:click="updateScreenInformation()">
-        getScreenInfo
-    </button>
+    <button v-on:click="updateScreenInformation()"> getScreenInfo </button>
+    <br> <br>
+    <button v-on:click="rotateAndLockScreen()"> rotateAndLockScreen </button>
+    <br> <br>
+    <button v-on:click="getScaleFromFlask()"> get scale from flask via axios </button>
 
     <!-- Show some screen info for debugging ... -->
     <p style="font-weight: bold;">Screen Information</p>
@@ -19,11 +21,12 @@
 
     <button id="show-modal" @click="showModal = true">Select Scale</button>
     <!-- use the modal component, pass in the prop -->
-    <scaleselectormodal v-if="showModal" @close="showModal = false">
+    <scaleselectormodal v-if="showModal" @close="showModal = false" @newScaleInformationReceived="getScaleInformationFromModal">
     </scaleselectormodal>
 
     <!-- <noteselectorv2></noteselectorv2> is now inside the modal component -->
     <!-- <scalemodeselector></scalemodeselector> is now inside the modal component -->
+
     <fretboard
         :scale=scale
         :showScaleNoteFunction=showScaleNoteFunction
@@ -38,8 +41,12 @@
     <p style="float: left"> Proposed Chords:</p>
     <br> <br> <br>
 
+    <!-- Catching of emitted events from children just does not work yet ... -->
+    <template v-on:npsactivated="rotateAndLockScreen()">
+    </template>
+
     <button v-for="chord in chords" :key=chord style="float: left; font-weight: bold; font-size: 40px"
-        @click="toggleChords(chord)">
+        @click="toggleChords(chord); ">
         {{chord.name}}
     </button>
 
@@ -69,6 +76,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 // import HelloWorld from './components/HelloWorld.vue'
 // import noteselector from './components/noteselector.vue'
 // import noteselectorv2 from './components/noteselectorv2.vue' --> is now inside the modal component
@@ -76,20 +84,6 @@
 import fretboard from './components/fretboard.vue'
 import scaleselectormodal from './components/scaleselectormodal.vue'
 // import fretnote from './components/fretnote.vue'
-
-console.log('starting up ...')
-console.log(document.getElementById('app'))
-console.log(screen.orientation)
-if (document.documentElement.requestFullscreen) {
-    document.getElementById('app').requestFullscreen()
-    console.log('executing requestFullscreen() ...')
-} else if (document.documentElement.webkitRequestFullScreen) {
-    document.getElementById('app').webkitRequestFullScreen()
-    console.log('executing webkitRequestFullScreen() ...')
-}
-if (screen.orientation.lock()) {
-    screen.orientation.lock('landscape')
-}
 
 export default {
     name: 'App',
@@ -101,18 +95,23 @@ export default {
             screenOrientation: 'Orientation: ' + screen.orientation.type + ' mode @ ' + screen.orientation.angle + '°',
             showModal: false,
             showScaleNoteFunction: false,
-            isChordSelected: true,
+            isChordSelected: false,
             showChordNoteFunction: false,
             chordSelected: {
-                name: 'D', // D as the default chord
-                noteNames: ['D', 'F#', 'A'],
-                noteNbrsAbs: [2, 6, 9],
-                noteFunction: ['R', '3', '5']
+                name: 'C', // D as the default chord
+                noteNames: ['C', 'E', 'G'],
+                noteNbrsAbs: [0, 4, 7],
+                noteFunction: ['R', 'M3', '5']
             },
-            scale: { // D major as the default scale
-                noteNames: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
-                noteNbrsAbs: [2, 4, 6, 7, 9, 11, 1],
-                noteFunction: ['R', '2', 'M3', '4', '5', '6', 'M7']
+            scaleInformation: { rootNote: 'F#', scaleMode: 'dorian' },
+            scale: { // C major as the default scale
+                noteNames: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+                noteNbrsAbs: [0, 2, 4, 5, 7, 9, 11],
+                noteFunction: ['R', '2', 'M3', '4', '5', '6', '7']
+            // scale: { // D major as the default scale
+                // noteNames: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
+                // noteNbrsAbs: [2, 4, 6, 7, 9, 11, 1],
+                // noteFunction: ['R', '2', 'M3', '4', '5', '6', 'M7']
             },
             chords: [
                 {
@@ -156,6 +155,8 @@ export default {
             this.pixelRatio = 'PixelRatio / Zoom-Factor: ' + window.devicePixelRatio.toFixed(2)
             this.resultingScreenResolution = 'Resulting Screen Resolution: ' + (window.screen.width * window.devicePixelRatio).toFixed(0) + 'x' + (window.screen.height * window.devicePixelRatio).toFixed(0)
             this.screenOrientation = 'Orientation: ' + screen.orientation.type + ' mode @ ' + screen.orientation.angle + '°'
+        },
+        rotateAndLockScreen: function () {
             if (document.documentElement.requestFullscreen) {
                 document.getElementById('app').requestFullscreen()
                 console.log('executing requestFullscreen() ...')
@@ -166,9 +167,26 @@ export default {
             if (screen.orientation.lock()) {
                 screen.orientation.lock('landscape')
             }
+        },
+        getScaleInformationFromModal (newScaleInformation) {
+            this.scaleInformation = newScaleInformation
+        },
+        getScaleFromFlask () {
+            const path = 'http://localhost:5000/guitarAppData'
+            axios.post(path, { rootnote: this.scaleInformation.rootNote, scalemode: this.scaleInformation.scaleMode })
+                .then((res) => {
+                    this.msg = res.data
+                    this.scale = res.data
+                })
+                .catch((error) => {
+                    // eslint-disable-next-line
+                    console.error(error)
+                    console.log('ERROR!')
+                })
         }
     }
 }
+
 </script>
 
 <style>

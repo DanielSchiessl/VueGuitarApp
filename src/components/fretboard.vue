@@ -4,7 +4,10 @@
         <div class="wrapper" style="justify-items: center">
             <template v-for="(stringNoteNbrAbs, stringindex) in strings.noteNbrsAbs" :key=stringindex> <!-- iterate over all (6) strings | use <template> as that is an empty container which will not be added to the DOM -->
                 <!-- fretsize should scale down linearly from 120 px to 40px -> reduce the 80 px delta in percent of fretNo -->
-                <div v-for="fretNo in numberOfFrets" class="box" :key="fretNo" :style="{'width':120-80*((fretNo/numberOfFrets))+'px', 'grid-row': stringindex+1,'grid-column': fretNo}"> <!-- set the ID to be the respective noteNumber so we can update the same notes all at once -->
+                <div v-for="fretNo in numberOfFrets" :key="fretNo" :style="{'grid-row': 1,'grid-column': fretNo}"> <!-- set the ID to be the respective noteNumber so we can update the same notes all at once -->
+                    {{fretNo}}
+                </div>
+                <div v-for="fretNo in numberOfFrets" class="box" :key="fretNo" :style="{'width':120-80*((fretNo/numberOfFrets))+'px', 'grid-row': stringindex+2,'grid-column': fretNo}"> <!-- set the ID to be the respective noteNumber so we can update the same notes all at once -->
                     <fretnote
                         v-if="scale.noteNbrsAbs.includes((stringNoteNbrAbs+fretNo)%12)"
                         :showScaleNoteFunction=showScaleNoteFunction
@@ -25,9 +28,10 @@
             <button v-for="fretNo in numberOfFrets" style="font-weight: bold; margin: 10%; width: fit-content"
                 :key=fretNo
                 v-show="scale.noteNbrsAbs.includes((strings.noteNbrsAbs[strings.noteNbrsAbs.length-1]+fretNo)%12)"
-                v-on:click="threenpsmodeactivated = !threenpsmodeactivated;
-                            threenpsstartdegree = scale.noteNbrsAbs.indexOf((strings.noteNbrsAbs[strings.noteNbrsAbs.length-1]+fretNo)%12)"
-                :style="{'grid-row': strings.noteNbrsAbs.length+1,'grid-column': fretNo, 'text-align': 'center'}">
+                v-on:click="$emit('npsactivated');
+                            threenpsmodeactivated = !threenpsmodeactivated;
+                            threenpsstartdegree = scale.noteNbrsAbs.indexOf((strings.noteNbrsAbs[strings.noteNbrsAbs.length-1]+fretNo)%12);"
+                :style="{'grid-row': strings.noteNbrsAbs.length+2,'grid-column': fretNo, 'text-align': 'center'}">
                 3NPS <br>
                 P{{1+scale.noteNbrsAbs.indexOf((strings.noteNbrsAbs[strings.noteNbrsAbs.length-1]+fretNo)%12)}}
             </button>
@@ -44,11 +48,12 @@ export default {
         fretnote
     },
     props: ['chord', 'showChordNoteFunction', 'isChordSelected', 'scale', 'showScaleNoteFunction'],
+    emits: ['npsactivated'],
     data () {
         return {
             numberOfFrets: 24,
             threenpsstartdegree: 2,
-            threenpsmodeactivated: true,
+            threenpsmodeactivated: false,
             strings: {
                 noteNames: ['E', 'B', 'G', 'D', 'A', 'E'], // tuning of the guitar / instrument (reverse for top to bottom view) - actually not needed ... maybe later if we want to show the 0-fret / open-string name ...
                 noteNbrsAbs: [4, 11, 7, 2, 9, 4] // tuning of the guitar / instrument (reverse for top to bottom view)

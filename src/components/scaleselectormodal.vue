@@ -3,8 +3,8 @@
         <div class="modal-mask">
             <div class="modal-wrapper">
                 <div class="modal-container">
-                    <noteselectorv2></noteselectorv2>
-                    <scalemodeselector></scalemodeselector>
+                    <noteselectorv2 @changeRootNote="changeRootNoteInModal"></noteselectorv2>
+                    <scalemodeselector @changeScaleMode="changeScaleModeInModal"></scalemodeselector>
                     <button class="modal-default-button" @click="$emit('close')">
                         OK
                     </button>
@@ -20,15 +20,31 @@ import noteselectorv2 from './noteselectorv2.vue'
 import scalemodeselector from './scalemodeselector.vue'
 
 export default {
-    name: 'scaleslectormodal',
+    name: 'scaleselectormodal',
+    emits: ['newScaleInformationReceived', 'close'], // just for documentation (?)
     components: {
         noteselectorv2,
         scalemodeselector
     },
     methods: {
+        changeRootNoteInModal (newRootNote) {
+            console.log('received new rootnote')
+            this.scaleInformation.rootNote = newRootNote
+            console.log(this.scaleInformation)
+            this.$emit('newScaleInformationReceived', this.scaleInformation)
+            // TODO send this back to the main app so it can from there then send a new request to our flask backend
+        },
+        changeScaleModeInModal (newScaleMode) {
+            console.log('received new scale mode')
+            this.scaleInformation.scaleMode = newScaleMode
+            console.log(this.scaleInformation)
+            this.$emit('newScaleInformationReceived', this.scaleInformation)
+            // TODO send this back to the main app so it can from there then send a new request to our flask backend
+        }
     },
     data () {
         return {
+            scaleInformation: { rootNote: 'C', scaleMode: 'dorian' }
         }
     }
 }

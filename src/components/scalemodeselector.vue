@@ -12,10 +12,12 @@
 <script>
 export default {
     name: 'scalemodeselector',
+    emits: ['changeScaleMode'], // just for documentation (?)
     methods: {
         select: function (event) {
-            var targetId = event.currentTarget.id
-            console.log(targetId) // the ID is equal to the notename to be used
+            var scaleMode = event.currentTarget.id // the ID is equal to the scale mode name to be used
+            // console.log(scaleMode) // the ID is equal to the scale mode name to be used
+            this.$emit('changeScaleMode', scaleMode)
         }
     },
     data () {

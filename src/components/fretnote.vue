@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isScaleNoteInThreeNpsPattern || threenpsmodeactivated" class="note" v-bind:style="{opacity: calcOpacity}">
+    <div class="note" v-bind:style="{opacity: calcOpacity}">
         <div v-if="isChordSelected">
                 <div v-if="showChordNoteFunction">
                     {{getNoteNameInChord}}
@@ -40,12 +40,21 @@ export default {
         },
         calcOpacity () {
             if (this.isChordSelected) {
+                // if a chord is selected check if that note is in this chord
                 if (this.chord.noteNbrsAbs.includes(this.noteNbrAbs)) {
                     return 1
                 } else {
                     return 0.2
                 }
-            } else { // if no chord is selected show all scale notes
+            } else if (this.threenpsmodeactivated) {
+                // if 3 NPS mode is active check if note is in 3NPS pattern
+                if (this.isScaleNoteInThreeNpsPattern) {
+                    return 1
+                } else {
+                    return 0.2
+                }
+            } else {
+                // if no chord is selected and no 3 NPS pattern activated show that note
                 return 1
             }
         },
