@@ -10,6 +10,8 @@
     <button v-on:click="rotateAndLockScreen()"> rotateAndLockScreen </button>
     <br> <br>
     <button v-on:click="getScaleFromFlask()"> get scale from flask via axios </button>
+    <br> <br>
+    <button v-on:click="getDummyData()"> get dummy data from jsonplaceholder </button>
 
     <!-- Show some screen info for debugging ... -->
     <p style="font-weight: bold;">Screen Information</p>
@@ -177,6 +179,18 @@ export default {
                 .then((res) => {
                     this.msg = res.data
                     this.scale = res.data
+                })
+                .catch((error) => {
+                    // eslint-disable-next-line
+                    console.error(error)
+                    console.log('ERROR!')
+                })
+        },
+        getDummyData () {
+            const path = 'https://jsonplaceholder.typicode.com/todos/1'
+            axios.get(path)
+                .then((res) => {
+                    console.log(res.data)
                 })
                 .catch((error) => {
                     // eslint-disable-next-line
