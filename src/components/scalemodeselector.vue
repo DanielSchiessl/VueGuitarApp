@@ -22,7 +22,7 @@ export default {
     },
     data () {
         return {
-            modenames: ['ionian (major)', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian (minor)', 'locrian']
+            modenames: ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']
         }
     }
 }

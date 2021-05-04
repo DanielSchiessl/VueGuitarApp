@@ -174,7 +174,10 @@ export default {
             this.scaleInformation = newScaleInformation
         },
         getScaleFromFlask () {
-            const path = 'http://localhost:5000/guitarAppData'
+            // const path = 'http://localhost:5000/guitarAppData'
+            /* FQDN of currently used azure containers instance - however it changes with each deployment as it has this incremental index at the end ...
+            // const path = 'http://containertest11.germanywestcentral.azurecontainer.io:5000/guitarAppData' */
+            const path = 'http://20.79.76.146:5000/guitarAppData' // IP address of currently used azure containers instance
             axios.post(path, { rootnote: this.scaleInformation.rootNote, scalemode: this.scaleInformation.scaleMode })
                 .then((res) => {
                     this.msg = res.data
