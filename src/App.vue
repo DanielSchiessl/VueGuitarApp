@@ -8,10 +8,7 @@
     <button v-on:click="updateScreenInformation()"> getScreenInfo </button>
     <br> <br>
     <button v-on:click="rotateAndLockScreen()"> rotateAndLockScreen </button>
-    <br> <br>
-    <button v-on:click="getScaleFromFlask()"> get scale from flask via axios </button>
-    <br> <br>
-    <button v-on:click="getDummyData()"> get dummy data from jsonplaceholder </button>
+    <br>
 
     <!-- Show some screen info for debugging ... -->
     <p style="font-weight: bold;">Screen Information</p>
@@ -23,7 +20,7 @@
 
     <button id="show-modal" @click="showModal = true">Select Scale</button>
     <!-- use the modal component, pass in the prop -->
-    <scaleselectormodal v-if="showModal" @close="showModal = false" @newScaleInformationReceived="getScaleInformationFromModal">
+    <scaleselectormodal v-if="showModal" @close="showModal = false" @newScaleInformationReceived="getScaleFromFlask">
     </scaleselectormodal>
 
     <!-- <noteselectorv2></noteselectorv2> is now inside the modal component -->
@@ -170,10 +167,8 @@ export default {
                 screen.orientation.lock('landscape')
             }
         },
-        getScaleInformationFromModal (newScaleInformation) {
-            this.scaleInformation = newScaleInformation
-        },
-        getScaleFromFlask () {
+        getScaleFromFlask (newScaleInformation) {
+            this.scaleInformation = newScaleInformation // get new data from vue component
             // const path = 'http://localhost:5000/guitarAppData'
             /* FQDN of currently used azure containers instance - however it changes with each deployment as it has this incremental index at the end ...
             // const path = 'http://containertest11.germanywestcentral.azurecontainer.io:5000/guitarAppData' */
@@ -187,6 +182,7 @@ export default {
                     // eslint-disable-next-line
                     console.error(error)
                     console.log('ERROR!')
+                    alert('Error getting data from flask backend :/')
                 })
         },
         getDummyData () {
